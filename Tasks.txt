@@ -1,0 +1,8 @@
+User inputs (number of people, time steps, infection rate, recovery rate)
+Creating 2d array with one random person infected
+Create person object with getters and setters
+Create new txt file and display grid
+Check surrounding tiles
+If next to infected person, chance for them to also get infected
+If infected, chance to recover
+Print infected, recovered, susceptable, ratio of infected to total
