@@ -6,3 +6,4 @@ Check surrounding tiles
 If next to infected person, chance for them to also get infected
 If infected, chance to recover
 Print infected, recovered, susceptable, ratio of infected to total
+test 
