@@ -18,6 +18,7 @@ public class GridGenerator {
         this.recoverRate = recoverRate;
         individualsSqrt = (int) Math.sqrt(individuals);
         grid = new String[individualsSqrt][individualsSqrt];
+
         // Creates the grid
         declareGrid();
         printGrid();
@@ -40,6 +41,7 @@ public class GridGenerator {
 
     public void printGrid() {
         System.out.println("Below is the randomly generated grid based on your input.");
+        // Creates the grid in the correct format
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 System.out.print(grid[i][j] + " ");
