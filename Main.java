@@ -35,9 +35,10 @@ public class Main {
     }
 
     //Method to check if a Person is next to an infected person
-    public static boolean isNextToInfectedPerson (int i, int j) {
-
+    public static boolean isNextToInfectedPerson (GridGenerator grid, int i, int j) {
+        // directions in arrays: up, down, left, and right, idea is to 
+        int[][] directions = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 
     }
-    
+
 }
