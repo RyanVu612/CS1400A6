@@ -6,18 +6,18 @@ public class GridGenerator {
     int individuals;
     int timeSteps;
     double infectionRate;
-    double recoverRate;
+    double recoveryRate;
     int individualsSqrt;
-    String[][] grid;
+    Person[][] grid;
 
-    public GridGenerator(int individuals, int timeSteps, double infectionRate, double recoverRate) throws IOException {
+    public GridGenerator(int individuals, int timeSteps, double infectionRate, double recoveryRate) throws IOException {
         // Variable assignments
         this.individuals = individuals;
         this.timeSteps = timeSteps;
         this.infectionRate = infectionRate;
-        this.recoverRate = recoverRate;
+        this.recoveryRate = recoveryRate;
         individualsSqrt = (int) Math.sqrt(individuals);
-        grid = new String[individualsSqrt][individualsSqrt];
+        grid = new Person[individualsSqrt][individualsSqrt];
 
         // Creates the grid
         declareGrid();
@@ -28,7 +28,7 @@ public class GridGenerator {
         // Creates a grid of the perfect square inputted by the user
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                grid[i][j] = "S";
+                grid[i][j] = new Person("S", infectionRate, recoveryRate);
             }
         }
 
@@ -36,7 +36,7 @@ public class GridGenerator {
         Random rand = new Random();
         int randNum1 = 1 + rand.nextInt(individualsSqrt - 1);
         int randNum2 = 1 + rand.nextInt(individualsSqrt - 1);
-        grid[randNum1][randNum2] = "I";
+        grid[randNum1][randNum2].setStatus("R");
     }
 
     public void printGrid() throws IOException {
