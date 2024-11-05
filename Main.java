@@ -21,5 +21,15 @@ public class Main {
 
         // Generate and draw grid
         GridGenerator grid = new GridGenerator(individuals, timeSteps, infectionRate, recoveryRate);
+
+        int time = 0;
+        while (time < timeSteps) {
+            // here is where we check whether we are next to people or whatever
+            // make sure to use the .txt file of the previous timeStep. so that changes 
+            // during that time don't affect the results of the same time
+            // if a "S" is next to an "I", call infect()
+            // if they are an "I", then call recover()
+            // then print the grid out.
+        }
     }
 }
