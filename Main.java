@@ -6,7 +6,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // Asking users the questions necessary
-        System.out.println("Input how many people you want. This must be a perfect square number of people:");
+        System.out.println("Input how many people you want. This must be a perfect square number of people: (Ex. 1, 4, 9 , 16, 25)");
         int individuals = scanner.nextInt();
         System.out.println("Input the number of time cycles you want:");
         int timeSteps = scanner.nextInt();
@@ -21,9 +21,10 @@ public class Main {
 
         // Generate and draw grid
         GridGenerator grid = new GridGenerator(individuals, timeSteps, infectionRate, recoveryRate);
-
+        
         int time = 0;
         while (time < timeSteps) {
+
             // here is where we check whether we are next to people or whatever
             // make sure to use the .txt file of the previous timeStep. so that changes 
             // during that time don't affect the results of the same time
@@ -32,4 +33,11 @@ public class Main {
             // then print the grid out.
         }
     }
+
+    //Method to check if a Person is next to an infected person
+    public static boolean isNextToInfectedPerson (int i, int j) {
+
+
+    }
+    
 }
