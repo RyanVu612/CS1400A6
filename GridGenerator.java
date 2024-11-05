@@ -21,7 +21,7 @@ public class GridGenerator {
 
         // Creates the grid
         declareGrid();
-        printGrid();
+        printGrid(0);
     }
 
     public void declareGrid() {
@@ -39,28 +39,21 @@ public class GridGenerator {
         grid[randNum1][randNum2].setStatus("R");
     }
 
-    public void printGrid() throws IOException {
-        for(int k=1; k<timeSteps+1; k++){
-            // Creates the grid in the correct format
-            String timeStepString = Integer.toString(k);
-            String filename = "TimeStep" + k + ".txt";
-            FileWriter fw = new FileWriter(filename);
-            PrintWriter outputFile = new PrintWriter(fw);
+    public void printGrid(int timeStep) throws IOException {
+        // Creates the grid in the correct format
+        String filename = "TimeStep" + timeStep + ".txt";
+        FileWriter fw = new FileWriter(filename);
+        PrintWriter outputFile = new PrintWriter(fw);
 
-            for (int i = 0; i < grid.length; i++) {
-                for (int j = 0; j < grid[0].length; j++) {
-                    outputFile.print(grid[i][j] + " ");
-                }
-                outputFile.print("\n");
-                
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                outputFile.print(grid[i][j].getStatus() + " ");
             }
-            outputFile.println("This is the end of the file.");
-            outputFile.close();
-
-            //edits the infected for now and only sees if I has a chance to recover w/o considering anything around it along w S
-            Person person = new Person(grid, infectionRate, recoverRate);
-            person.getStatus(grid);
+            outputFile.print("\n");
         }
+
+        outputFile.println("This is the end of the file.");
+        outputFile.close();
     }
 
 }
