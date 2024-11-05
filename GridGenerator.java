@@ -1,4 +1,4 @@
-import java.lang.Math;
+import java.io.*;
 import java.util.Random;
 
 public class GridGenerator {
@@ -10,7 +10,7 @@ public class GridGenerator {
     int individualsSqrt;
     String[][] grid;
 
-    public GridGenerator(int individuals, int timeSteps, double infectionRate, double recoverRate) {
+    public GridGenerator(int individuals, int timeSteps, double infectionRate, double recoverRate) throws IOException {
         // Variable assignments
         this.individuals = individuals;
         this.timeSteps = timeSteps;
@@ -39,14 +39,27 @@ public class GridGenerator {
         grid[randNum1][randNum2] = "I";
     }
 
-    public void printGrid() {
-        System.out.println("Below is the randomly generated grid based on your input.");
-        // Creates the grid in the correct format
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                System.out.print(grid[i][j] + " ");
+    public void printGrid() throws IOException {
+        for(int k=1; k<timeSteps+1; k++){
+            // Creates the grid in the correct format
+            String timeStepString = Integer.toString(k);
+            String filename = "TimeStep" + k + ".txt";
+            FileWriter fw = new FileWriter(filename);
+            PrintWriter outputFile = new PrintWriter(fw);
+
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid[0].length; j++) {
+                    outputFile.print(grid[i][j] + " ");
+                }
+                outputFile.print("\n");
+                
             }
-            System.out.print("\n");
+            outputFile.println("This is the end of the file.");
+            outputFile.close();
+
+            //edits the infected for now and only sees if I has a chance to recover w/o considering anything around it along w S
+            Person person = new Person(grid, infectionRate, recoverRate);
+            person.getStatus(grid);
         }
     }
 
