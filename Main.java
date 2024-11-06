@@ -40,7 +40,6 @@ public class Main {
 
         int time = 0;
         while (time < timeSteps) {
-
             // here is where we check whether we are next to people or whatever
             // make sure to use the .txt file of the previous timeStep. so that changes 
             // during that time don't affect the results of the same time
@@ -50,7 +49,7 @@ public class Main {
 
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid.length; j++) {
-                    if (grid[i][j].isNextToInfectedPerson()) {
+                    if (grid[i][j].isNextToInfectedPerson() && grid[i][j].getStatus().equals("S")) {
                         // person already infected
                         grid[i][j].infect();
                         continue;
@@ -69,10 +68,13 @@ public class Main {
                     }
                 }
             }
+
+            time++;
+            printGrid(grid, time);
         }
     }
 
-    public void printGrid(Person[][] grid, int timeStep) throws IOException {
+    public static void printGrid(Person[][] grid, int timeStep) throws IOException {
         // Creates the grid in the correct format
         String filename = "TimeStep" + timeStep + ".txt";
         FileWriter fw = new FileWriter(filename);
