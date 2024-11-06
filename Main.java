@@ -1,9 +1,12 @@
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
+        Random rand = new Random();
 
         // Asking users the questions necessary
         System.out.println("Input how many people you want. This must be a perfect square number of people: (Ex. 1, 4, 9 , 16, 25)");
@@ -19,9 +22,22 @@ public class Main {
         System.out.println("Input the rate of recovery. This must be as a decimal (ex. 0.6, 0.8):");
         double recoveryRate = scanner.nextDouble();
 
-        // Generate and draw grid
-        GridGenerator grid = new GridGenerator(individuals, timeSteps, infectionRate, recoveryRate);
-        
+        int individualsSqrt =  (int)Math.sqrt(individuals);
+
+
+        // Creates a grid of the perfect square inputted by the user
+        Person[][] grid = new Person[individualsSqrt][individualsSqrt];
+        for (int i = 0; i < individualsSqrt; i++) {
+            for (int j = 0; j < individualsSqrt; j++) {
+                grid[i][j] = new Person("S", infectionRate, recoveryRate, false);
+            }
+        }
+
+        // Creates a random slot to put the infected person into
+        int randNum1 = 1 + rand.nextInt(individualsSqrt - 1);
+        int randNum2 = 1 + rand.nextInt(individualsSqrt - 1);
+        grid[randNum1][randNum2].setStatus("R");
+
         int time = 0;
         while (time < timeSteps) {
 
@@ -31,14 +47,45 @@ public class Main {
             // if a "S" is next to an "I", call infect()
             // if they are an "I", then call recover()
             // then print the grid out.
+
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid.length; j++) {
+                    if (grid[i][j].isNextToInfectedPerson()) {
+                        // person already infected
+                        grid[i][j].infect();
+                        continue;
+                    } else if (grid[i][j].getStatus().equals("I")) {
+                        // Aleady infected
+                        grid[i][j].recover();
+                    } else if (grid[i][j].getStatus().equals("R")) {
+                        // recovered, don't need to do anything
+                        continue;
+                    } else {
+                        if (i != 0) {
+                            if (grid[i-1][j].getStatus().equals("I")) {
+                                grid[i][j].nextToInfectedPerson();
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    //Method to check if a Person is next to an infected person
-    public static boolean isNextToInfectedPerson (GridGenerator grid, int i, int j) {
-        // directions in arrays: up, down, left, and right, idea is to 
-        int[][] directions = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
+    public void printGrid(Person[][] grid, int timeStep) throws IOException {
+        // Creates the grid in the correct format
+        String filename = "TimeStep" + timeStep + ".txt";
+        FileWriter fw = new FileWriter(filename);
+        PrintWriter outputFile = new PrintWriter(fw);
 
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                outputFile.print(grid[i][j].getStatus() + " ");
+            }
+            outputFile.print("\n");
+        }
+
+        outputFile.println("This is the end of the file.");
+        outputFile.close();
     }
-
 }

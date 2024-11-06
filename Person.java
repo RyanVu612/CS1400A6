@@ -4,13 +4,15 @@ public class Person {
     String status;
     double infectionRate;
     double recoveryRate;
+    boolean isNextToInfectedPerson;
     Random rand = new Random();
 
     //Constructor
-    public Person(String status, double infectionRate, double recoveryRate){
+    public Person(String status, double infectionRate, double recoveryRate, boolean isNextToInfectedPerson){
         this.status = status;
         this.recoveryRate = recoveryRate;
         this.infectionRate = infectionRate;
+        this.isNextToInfectedPerson = isNextToInfectedPerson;
     }
     
     public String getStatus() {
@@ -33,5 +35,13 @@ public class Person {
         if (status.equals("S") && randomProb <= infectionRate) {
             status = "I";
         }
+    }
+
+    public void nextToInfectedPerson() {
+        isNextToInfectedPerson = true;
+    }
+
+    public boolean isNextToInfectedPerson() {
+        return isNextToInfectedPerson;
     }
 }
