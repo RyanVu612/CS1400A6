@@ -44,8 +44,8 @@ public class Main {
                         person.recover();
                     }
                 }
+                grid.printGrid(time + 1);
             }
-            grid.printGrid(time + 1);
         }
     }
 
