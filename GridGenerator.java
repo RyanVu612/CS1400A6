@@ -36,7 +36,7 @@ public class GridGenerator {
         Random rand = new Random();
         int randNum1 = 1 + rand.nextInt(individualsSqrt - 1);
         int randNum2 = 1 + rand.nextInt(individualsSqrt - 1);
-        grid[randNum1][randNum2].setStatus("R");
+        grid[randNum1][randNum2].setStatus("I");
     }
 
     public void printGrid(int timeStep) throws IOException {
