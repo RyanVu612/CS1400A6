@@ -36,7 +36,7 @@ public class Main {
                 for (int j = 0; j < grid.individualsSqrt; j++) { 
                     Person person = grid.grid[i][j]; // Access the person at i and j 
 
-                    //FIXME If person is S and next to I, call infect() 
+                    //If person is S and next to I, call infect() 
                     if (person.getStatus().equals("S") && isNextToInfectedPerson(previousGrid, i, j)) {
                         person.infect(); 
                     }
@@ -61,7 +61,7 @@ public class Main {
             int personRow = i + direction[0]; // checks the rows (x-axis)
             int personColumn = i + direction[1]; // checks the columns (y-axis)
 
-            // FIXME. suppose to check if the person is next to someone whos infected
+            // FIXME maybe there's an issue here?. suppose to check if the person is next to someone whos infected
             if (personRow >= 0 && personRow < previousGrid.length && personColumn >= 0 && personColumn < previousGrid.length 
             && "I".equals(previousGrid[personRow][personColumn].getStatus())){
                 return true;
@@ -71,13 +71,14 @@ public class Main {
         
     }
 
+    // copies previous grid into a new grid
     public static Person[][] copyGrid(Person[][] originalGrid){
-        int size = originalGrid.length;
-        Person[][] newGrid = new Person[size][size];
+        int size = originalGrid.length; //gets size of og grid
+        Person[][] newGrid = new Person[size][size]; //creates new grid
         
         for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                Person originalPerson = originalGrid[i][j];
+            for (int j = 0; j < size; j++) {// goes through all rows and columns
+                Person originalPerson = originalGrid[i][j]; // then gets the person and puts them into the newGrid
                 newGrid[i][j] = new Person(originalPerson.getStatus(), originalPerson.infectionRate, originalPerson.recoveryRate);
             }
         }
