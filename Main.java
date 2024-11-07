@@ -36,9 +36,11 @@ public class Main {
         // Creates a random slot to put the infected person into
         int randNum1 = 1 + rand.nextInt(individualsSqrt - 1);
         int randNum2 = 1 + rand.nextInt(individualsSqrt - 1);
-        grid[randNum1][randNum2].setStatus("R");
+        grid[randNum1][randNum2].setStatus("I");
 
         int time = 0;
+
+        printGrid(grid, time);
         while (time < timeSteps) {
             // here is where we check whether we are next to people or whatever
             // make sure to use the .txt file of the previous timeStep. so that changes 
@@ -49,8 +51,7 @@ public class Main {
 
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid.length; j++) {
-                    if (grid[i][j].isNextToInfectedPerson() && grid[i][j].getStatus().equals("S")) {
-                        // person already infected
+                    if (grid[i][j].getStatus().equals("S") && grid[i][j].isNextToInfectedPerson()) {
                         grid[i][j].infect();
                         continue;
                     } else if (grid[i][j].getStatus().equals("I")) {
@@ -60,10 +61,13 @@ public class Main {
                         // recovered, don't need to do anything
                         continue;
                     } else {
-                        if (i != 0) {
-                            if (grid[i-1][j].getStatus().equals("I")) {
-                                grid[i][j].nextToInfectedPerson();
-                            }
+                        // Susceptible
+                        if ((i != 0 && grid[i-1][j].getStatus().equals("I")) ||
+                            (j != 0 && grid[i][j-1].getStatus().equals("I")) ||
+                            (i != grid.length - 1 && grid[i+1][j].getStatus().equals("I")) ||
+                            (j != grid.length - 1 && grid[i][j+1].getStatus().equals("I"))) {
+                            grid[i][j].nextToInfectedPerson();
+                            grid[i][j].infect();
                         }
                     }
                 }
