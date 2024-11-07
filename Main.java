@@ -30,12 +30,14 @@ public class Main {
             // if they are an "I", then call recover()
             // then print the grid out.
 
+            Person[][] previousGrid = copyGrid(grid.grid);
+
             for (int i = 0; i < grid.individualsSqrt; i++) { // Loop over each row and columns
                 for (int j = 0; j < grid.individualsSqrt; j++) { 
                     Person person = grid.grid[i][j]; // Access the person at i and j 
 
                     //FIXME If person is S and next to I, call infect() 
-                    if (person.getStatus().equals("S") && isNextToInfectedPerson(grid, i, j)) {
+                    if (person.getStatus().equals("S") && isNextToInfectedPerson(previousGrid, i, j)) {
                         person.infect(); 
                     }
 
@@ -44,13 +46,14 @@ public class Main {
                         person.recover();
                     }
                 }
-                grid.printGrid(time + 1);
+                
             }
+            grid.printGrid(time + 1);
         }
     }
 
     //Method to check if a Person is next to an infected person
-    public static boolean isNextToInfectedPerson (GridGenerator grid, int i, int j) {
+    public static boolean isNextToInfectedPerson (Person[][] previousGrid, int i, int j) {
         // directions in arrays: up, down, left, and right, idea is to 
         int[][] directions = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 
@@ -59,13 +62,26 @@ public class Main {
             int personColumn = i + direction[1]; // checks the columns (y-axis)
 
             // FIXME. suppose to check if the person is next to someone whos infected
-            if (personRow >= 0 && personRow < grid.individualsSqrt && personColumn >= 0 && personColumn < grid.individualsSqrt 
-            && "I".equals(grid.grid[personRow][personColumn].getStatus())){
+            if (personRow >= 0 && personRow < previousGrid.length && personColumn >= 0 && personColumn < previousGrid.length 
+            && "I".equals(previousGrid[personRow][personColumn].getStatus())){
                 return true;
             }
         }
         return false;
         
+    }
+
+    public static Person[][] copyGrid(Person[][] originalGrid){
+        int size = originalGrid.length;
+        Person[][] newGrid = new Person[size][size];
+        
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                Person originalPerson = originalGrid[i][j];
+                newGrid[i][j] = new Person(originalPerson.getStatus(), originalPerson.infectionRate, originalPerson.recoveryRate);
+            }
+        }
+        return newGrid;
     }
 
 }
