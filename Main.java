@@ -1,6 +1,8 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Main {
@@ -41,6 +43,9 @@ public class Main {
         int time = 0;
 
         printGrid(grid, time);
+
+        String filePath = "";
+
         while (time < timeSteps) {
             // here is where we check whether we are next to people or whatever
             // make sure to use the .txt file of the previous timeStep. so that changes 
@@ -48,6 +53,8 @@ public class Main {
             // if a "S" is next to an "I", call infect()
             // if they are an "I", then call recover()
             // then print the grid out.
+            
+            filePath = "TimeStep" + time + ".txt";
 
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid.length; j++) {
@@ -62,10 +69,12 @@ public class Main {
                         continue;
                     } else {
                         // Susceptible
-                        if ((i != 0 && grid[i-1][j].getStatus().equals("I")) ||
-                            (j != 0 && grid[i][j-1].getStatus().equals("I")) ||
-                            (i != grid.length - 1 && grid[i+1][j].getStatus().equals("I")) ||
-                            (j != grid.length - 1 && grid[i][j+1].getStatus().equals("I"))) {
+
+                        
+                        if ((i != 0 && Files.readAllLines(Paths.get(filePath)).get(i).charAt(j) == 'I') ||
+                            (j != 0 && Files.readAllLines(Paths.get(filePath)).get(i+1).charAt(j-1) == 'I') ||
+                            (i != grid.length - 1 && Files.readAllLines(Paths.get(filePath)).get(i+2).charAt(j) == 'I') ||
+                            (j != grid.length - 1 && Files.readAllLines(Paths.get(filePath)).get(i+1).charAt(j+1) == 'I')) {
                             grid[i][j].nextToInfectedPerson();
                             grid[i][j].infect();
                         }
@@ -86,7 +95,7 @@ public class Main {
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                outputFile.print(grid[i][j].getStatus() + " ");
+                outputFile.print(grid[i][j].getStatus());
             }
             outputFile.print("\n");
         }
