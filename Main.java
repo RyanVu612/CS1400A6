@@ -31,7 +31,7 @@ public class Main {
         Person[][] grid = new Person[individualsSqrt][individualsSqrt];
         for (int i = 0; i < individualsSqrt; i++) {
             for (int j = 0; j < individualsSqrt; j++) {
-                grid[i][j] = new Person("S", infectionRate, recoveryRate, false);
+                grid[i][j] = new Person("S", "S", infectionRate, recoveryRate, false);
             }
         }
 
@@ -58,26 +58,27 @@ public class Main {
 
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid.length; j++) {
-                    if (grid[i][j].getStatus().equals("S") && grid[i][j].isNextToInfectedPerson()) {
-                        grid[i][j].infect();
-                        continue;
-                    } else if (grid[i][j].getStatus().equals("I")) {
+                    if (grid[i][j].getStatus().equals("I")) {
                         // Aleady infected
                         grid[i][j].recover();
-                    } else if (grid[i][j].getStatus().equals("R")) {
-                        // recovered, don't need to do anything
-                        continue;
                     } else {
                         // Susceptible
-
                         
-                        if ((i != 0 && Files.readAllLines(Paths.get(filePath)).get(i).charAt(j) == 'I') ||
-                            (j != 0 && Files.readAllLines(Paths.get(filePath)).get(i+1).charAt(j-1) == 'I') ||
-                            (i != grid.length - 1 && Files.readAllLines(Paths.get(filePath)).get(i+2).charAt(j) == 'I') ||
-                            (j != grid.length - 1 && Files.readAllLines(Paths.get(filePath)).get(i+1).charAt(j+1) == 'I')) {
+                        if ((i != 0 && grid[i-1][j].getPreviousStatus().equals("I")) ||
+                            (j != 0 && grid[i][j-1].getPreviousStatus().equals("I")) ||
+                            (i != grid.length - 1 && grid[i+1][j].getPreviousStatus().equals("I")) ||
+                            (j != grid.length - 1 && grid[i][j+1].getPreviousStatus().equals("I"))) {
                             grid[i][j].nextToInfectedPerson();
                             grid[i][j].infect();
                         }
+                    }
+                }
+            }
+
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid.length; j++) {
+                    if (grid[i][j].getStatus() != grid[i][j].getPreviousStatus()) {
+                        grid[i][j].setPreviousStatus(grid[i][j].getStatus());
                     }
                 }
             }
