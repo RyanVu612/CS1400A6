@@ -46,7 +46,6 @@ public class Main {
                         person.recover();
                     }
                 }
-                
             }
             grid.printGrid(time + 1);
         }
@@ -59,16 +58,15 @@ public class Main {
 
         for (int [] direction : directions) { 
             int personRow = i + direction[0]; // checks the rows (x-axis)
-            int personColumn = i + direction[1]; // checks the columns (y-axis)
+            int personColumn = j + direction[1]; // checks the columns (y-axis)
 
             // FIXME maybe there's an issue here?. suppose to check if the person is next to someone whos infected
-            if (personRow >= 0 && personRow < previousGrid.length && personColumn >= 0 && personColumn < previousGrid.length 
-            && "I".equals(previousGrid[personRow][personColumn].getStatus())){
+            if (personRow >= 0 && personRow < previousGrid.length && personColumn >= 0 && personColumn < previousGrid.length &&
+            "I".equals(previousGrid[personRow][personColumn].getStatus())){
                 return true;
             }
         }
         return false;
-        
     }
 
     // copies previous grid into a new grid
