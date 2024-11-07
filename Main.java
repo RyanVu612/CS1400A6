@@ -30,11 +30,11 @@ public class Main {
             // if they are an "I", then call recover()
             // then print the grid out.
 
-            for (int i = 0; i < grid.individualsSqrt; i++) { // Loop over each row
+            for (int i = 0; i < grid.individualsSqrt; i++) { // Loop over each row and columns
                 for (int j = 0; j < grid.individualsSqrt; j++) { 
-                    Person person = grid.grid[i][j]; 
+                    Person person = grid.grid[i][j]; // Access the person at i and j 
 
-                    // FIXME If person is S and next to I, call infect()
+                    //FIXME If person is S and next to I, call infect() 
                     if (person.getStatus().equals("S") && isNextToInfectedPerson(grid, i, j)) {
                         person.infect(); 
                     }
