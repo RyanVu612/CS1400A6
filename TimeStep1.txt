@@ -1,4 +1,0 @@
-S S S 
-S I S 
-S S S 
-This is the end of the file.
