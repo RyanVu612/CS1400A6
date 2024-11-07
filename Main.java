@@ -31,12 +31,12 @@ public class Main {
             // then print the grid out.
 
             for (int i = 0; i < grid.individualsSqrt; i++) { // Loop over each row
-                for (int j = 0; j < grid.individualsSqrt; j++) { // Loop over each column
-                    Person person = grid.grid[i][j]; // Access the person at (i, j)
+                for (int j = 0; j < grid.individualsSqrt; j++) { 
+                    Person person = grid.grid[i][j]; 
 
                     // FIXME If person is S and next to I, call infect()
                     if (person.getStatus().equals("S") && isNextToInfectedPerson(grid, i, j)) {
-                        person.infect(); // Attempt to infect if there's an infected neighbor
+                        person.infect(); 
                     }
 
                     // If person is I, call recover()
