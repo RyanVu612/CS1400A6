@@ -22,15 +22,30 @@ public class Main {
         // Generate and draw grid
         GridGenerator grid = new GridGenerator(individuals, timeSteps, infectionRate, recoveryRate);
         
-        int time = 0;
-        while (time < timeSteps) {
-
+        for (int time = 0; time < timeSteps; time++) {
             // here is where we check whether we are next to people or whatever
             // make sure to use the .txt file of the previous timeStep. so that changes 
             // during that time don't affect the results of the same time
             // if a "S" is next to an "I", call infect()
             // if they are an "I", then call recover()
             // then print the grid out.
+
+            for (int i = 0; i < grid.individualsSqrt; i++) { // Loop over each row
+                for (int j = 0; j < grid.individualsSqrt; j++) { // Loop over each column
+                    Person person = grid.grid[i][j]; // Access the person at (i, j)
+
+                    // FIXME If person is S and next to I, call infect()
+                    if (person.getStatus().equals("S") && isNextToInfectedPerson(grid, i, j)) {
+                        person.infect(); // Attempt to infect if there's an infected neighbor
+                    }
+
+                    // If person is I, call recover()
+                    if (person.getStatus().equals("I")) {
+                        person.recover();
+                    }
+                }
+            }
+            grid.printGrid(time + 1);
         }
     }
 
@@ -39,6 +54,18 @@ public class Main {
         // directions in arrays: up, down, left, and right, idea is to 
         int[][] directions = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 
+        for (int [] direction : directions) { 
+            int personRow = i + direction[0]; // checks the rows (x-axis)
+            int personColumn = i + direction[1]; // checks the columns (y-axis)
+
+            // FIXME. suppose to check if the person is next to someone whos infected
+            if (personRow >= 0 && personRow < grid.individualsSqrt && personColumn >= 0 && personColumn < grid.individualsSqrt 
+            && "I".equals(grid.grid[personRow][personColumn].getStatus())){
+                return true;
+            }
+        }
+        return false;
+        
     }
 
 }
