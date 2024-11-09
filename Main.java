@@ -42,7 +42,7 @@ public class Main {
                     }
 
                     // If person is I, call recover()
-                    if (person.getStatus().equals("I")) {
+                    else if (person.getStatus().equals("I")) {
                         person.recover();
                     }
                 }
