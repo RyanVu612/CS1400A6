@@ -45,14 +45,43 @@ public class GridGenerator {
         FileWriter fw = new FileWriter(filename);
         PrintWriter outputFile = new PrintWriter(fw);
 
+        int susceptibleCount = 0;
+        int infectedCount = 0;
+        int recoveredCount = 0;
+
+
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                outputFile.print(grid[i][j].getStatus() + " ");
+                
+                String status = grid[i][j].getStatus();
+                outputFile.print(status + " ");
+
+                // Count each type of individual
+                if (status.equals("S")){
+                    susceptibleCount++;
+                }
+                else if (status.equals("I")) {
+                    infectedCount++;
+                } 
+                else if (status.equals("R")) {
+                    recoveredCount++;
+                }
             }
             outputFile.print("\n");
         }
 
-        outputFile.println("This is the end of the file.");
+        // Calculate the infected ratio
+        double infectedRatio = (double) infectedCount / individuals;
+
+        // Print the statistics at the end of the file
+        outputFile.println("\nStatistics for Time Step " + timeStep + ":");
+        outputFile.println("Susceptible Individuals: " + susceptibleCount);
+        outputFile.println("Infected Individuals: " + infectedCount);
+        outputFile.println("Recovered Individuals: " + recoveredCount);
+        outputFile.printf("Infected Ratio: %.2f\n", infectedRatio);
+
+
+        outputFile.println("\nThis is the end of the file.");
         outputFile.close();
     }
 
