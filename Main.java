@@ -8,6 +8,13 @@ public class Main {
         // Asking users the questions necessary
         System.out.println("Input how many people you want. This must be a perfect square number of people: (Ex. 1, 4, 9 , 16, 25)");
         int individuals = scanner.nextInt();
+        int sqrt = (int) Math.sqrt(individuals);
+        while (sqrt * sqrt != individuals)
+        {
+            System.out.println("Invalid input. Please enter a perfect square number:");
+            individuals = scanner.nextInt();
+            sqrt = (int) Math.sqrt(individuals);
+        }
         System.out.println("Input the number of time cycles you want:");
         int timeSteps = scanner.nextInt();
         if(timeSteps > 20){
