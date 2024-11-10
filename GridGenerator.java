@@ -49,7 +49,6 @@ public class GridGenerator {
         int infectedCount = 0;
         int recoveredCount = 0;
 
-
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 
@@ -78,9 +77,7 @@ public class GridGenerator {
         outputFile.println("Susceptible Individuals: " + susceptibleCount);
         outputFile.println("Infected Individuals: " + infectedCount);
         outputFile.println("Recovered Individuals: " + recoveredCount);
-        outputFile.printf("Infected Ratio: %.2f\n", infectedRatio);
-
-
+        outputFile.printf("Infected Ratio: " + infectedCount + "/" + individuals + " (" + infectedRatio + ")");
         outputFile.println("\nThis is the end of the file.");
         outputFile.close();
     }

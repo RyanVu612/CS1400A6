@@ -4,52 +4,63 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
+        int individuals;
+        int timeSteps;
+        double infectionRate;
+        double recoveryRate;
+
+        int sqrt;
 
         // Asking users the questions necessary
         System.out.println("Input how many people you want. This must be a perfect square number of people: (Ex. 1, 4, 9 , 16, 25)");
-        int individuals = scanner.nextInt();
-        int sqrt = (int) Math.sqrt(individuals);
+        individuals = scanner.nextInt();
+        sqrt = (int) Math.sqrt(individuals);
         while (sqrt * sqrt != individuals)
         {
             System.out.println("Invalid input. Please enter a perfect square number:");
             individuals = scanner.nextInt();
             sqrt = (int) Math.sqrt(individuals);
         }
+
         System.out.println("Input the number of time cycles you want:");
-        int timeSteps = scanner.nextInt();
+        timeSteps = scanner.nextInt();
         if(timeSteps > 20){
             timeSteps = 20;
             System.out.println("Too many timesteps. Reduced to limit cap 20");
         }
-        System.out.println("Input the rate of infection. This must be as a decimal (ex. 0.6, 0.8):");
-        double infectionRate = scanner.nextDouble();
-        System.out.println("Input the rate of recovery. This must be as a decimal (ex. 0.6, 0.8):");
-        double recoveryRate = scanner.nextDouble();
+
+        System.out.println("Input the rate of infection. This must be as a decimal between 0 and 1 (ex. 0.6, 0.8):");
+        infectionRate = scanner.nextDouble();
+        while (infectionRate >= 1 || infectionRate < 0) {
+            System.out.println("Invalid input. Please enter a decimal between 0 and 1");
+            infectionRate = scanner.nextDouble();
+        }
+
+        System.out.println("Input the rate of recovery. This must be as a decimal between 0 and 1 (ex. 0.6, 0.8):");
+        recoveryRate = scanner.nextDouble();
+        while (recoveryRate >= 1 || recoveryRate < 0) {
+            System.out.println("Invalid input. Please enter a decimal between 0 and 1");
+            recoveryRate = scanner.nextDouble();
+        }
 
         // Generate and draw grid
         GridGenerator grid = new GridGenerator(individuals, timeSteps, infectionRate, recoveryRate);
         
         for (int time = 0; time < timeSteps; time++) {
-            // here is where we check whether we are next to people or whatever
-            // make sure to use the .txt file of the previous timeStep. so that changes 
-            // during that time don't affect the results of the same time
-            // if a "S" is next to an "I", call infect()
-            // if they are an "I", then call recover()
-            // then print the grid out.
-
             Person[][] previousGrid = copyGrid(grid.grid);
 
-            for (int i = 0; i < grid.individualsSqrt; i++) { // Loop over each row and columns
+            // Check and change status of each individual
+            // If S and next to I, chance to infect
+            // If I, chance to recover
+            for (int i = 0; i < grid.individualsSqrt; i++) {
                 for (int j = 0; j < grid.individualsSqrt; j++) { 
                     Person person = grid.grid[i][j]; // Access the person at i and j 
 
                     //If person is S and next to I, call infect() 
                     if (person.getStatus().equals("S") && isNextToInfectedPerson(previousGrid, i, j)) {
                         person.infect(); 
-                    }
+                    } else if (person.getStatus().equals("I")) {    // If person is I, call recover()
 
-                    // If person is I, call recover()
-                    else if (person.getStatus().equals("I")) {
                         person.recover();
                     }
                 }
@@ -69,7 +80,7 @@ public class Main {
 
             // check if the person is next to someone whos infected
             if (personRow >= 0 && personRow < previousGrid.length && personColumn >= 0 && personColumn < previousGrid.length &&
-            "I".equals(previousGrid[personRow][personColumn].getStatus())){
+            previousGrid[personRow][personColumn].getStatus().equals("I")){
                 return true;
             }
         }
@@ -89,5 +100,4 @@ public class Main {
         }
         return newGrid;
     }
-
 }
