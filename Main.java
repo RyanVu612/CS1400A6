@@ -48,7 +48,7 @@ public class Main {
         
         Person[][] previousGrid;
         for (int time = 0; time < timeSteps; time++) {
-            previousGrid = copyGrid(grid.grid);
+            previousGrid = grid.copyGrid();
 
             // Check and change status of each individual
             // If S and next to I, chance to infect
@@ -57,7 +57,7 @@ public class Main {
                 for (int j = 0; j < grid.individualsSqrt; j++) { 
                     // Access the person at i and j 
                     Person person = grid.grid[i][j]; 
-                    
+
                     //If person is S and next to I, call infect() 
                     if (person.getStatus().equals("S") && isNextToInfectedPerson(previousGrid, i, j)) {
                         person.infect(); 
@@ -86,19 +86,5 @@ public class Main {
             }
         }
         return false;
-    }
-
-    // copies previous grid into a new grid
-    public static Person[][] copyGrid(Person[][] originalGrid){
-        int size = originalGrid.length; //gets size of og grid
-        Person[][] newGrid = new Person[size][size]; //creates new grid
-        
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {// goes through all rows and columns
-                Person originalPerson = originalGrid[i][j]; // then gets the person and puts them into the newGrid
-                newGrid[i][j] = new Person(originalPerson.getStatus(), originalPerson.infectionRate, originalPerson.recoveryRate);
-            }
-        }
-        return newGrid;
     }
 }

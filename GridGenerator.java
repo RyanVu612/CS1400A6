@@ -82,4 +82,16 @@ public class GridGenerator {
         outputFile.close();
     }
 
+    public Person[][] copyGrid(){
+        int size = grid.length; //gets size of og grid
+        Person[][] newGrid = new Person[size][size]; //creates new grid
+        
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {// goes through all rows and columns
+                Person originalPerson = grid[i][j]; // then gets the person and puts them into the newGrid
+                newGrid[i][j] = new Person(originalPerson.getStatus(), originalPerson.infectionRate, originalPerson.recoveryRate);
+            }
+        }
+        return newGrid;
+    }
 }
