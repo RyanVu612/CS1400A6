@@ -34,10 +34,15 @@ public class Grid {
         }
 
         // Creates a random slot to put the infected person into
+        // If there is only one person, set that person to "I"
         Random rand = new Random();
-        int randNum1 = 1 + rand.nextInt(individualsSqrt - 1);
-        int randNum2 = 1 + rand.nextInt(individualsSqrt - 1);
-        grid[randNum1][randNum2].setStatus("I");
+        if (individualsSqrt == 1) {
+            grid[0][0].setStatus("I");
+        } else {
+            int randNum1 = 1 + rand.nextInt(individualsSqrt - 1);
+            int randNum2 = 1 + rand.nextInt(individualsSqrt - 1);
+            grid[randNum1][randNum2].setStatus("I");
+        }
     }
 
     public void printGrid(int timeStep) throws IOException {
