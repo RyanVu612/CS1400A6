@@ -46,16 +46,18 @@ public class Main {
         // Generate and draw grid
         GridGenerator grid = new GridGenerator(individuals, timeSteps, infectionRate, recoveryRate);
         
+        Person[][] previousGrid;
         for (int time = 0; time < timeSteps; time++) {
-            Person[][] previousGrid = copyGrid(grid.grid);
+            previousGrid = copyGrid(grid.grid);
 
             // Check and change status of each individual
             // If S and next to I, chance to infect
             // If I, chance to recover
             for (int i = 0; i < grid.individualsSqrt; i++) {
                 for (int j = 0; j < grid.individualsSqrt; j++) { 
-                    Person person = grid.grid[i][j]; // Access the person at i and j 
-
+                    // Access the person at i and j 
+                    Person person = grid.grid[i][j]; 
+                    
                     //If person is S and next to I, call infect() 
                     if (person.getStatus().equals("S") && isNextToInfectedPerson(previousGrid, i, j)) {
                         person.infect(); 
@@ -73,7 +75,6 @@ public class Main {
     public static boolean isNextToInfectedPerson (Person[][] previousGrid, int i, int j) {
         // directions in arrays: up, down, left, and right, idea is to 
         int[][] directions = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
-
         for (int [] direction : directions) { 
             int personRow = i + direction[0]; // checks the rows (x-axis)
             int personColumn = j + direction[1]; // checks the columns (y-axis)
