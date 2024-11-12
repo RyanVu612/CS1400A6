@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.Random;
 
-public class GridGenerator {
+public class Grid {
 
     int individuals;
     int timeSteps;
@@ -10,7 +10,7 @@ public class GridGenerator {
     int individualsSqrt;
     Person[][] grid;
 
-    public GridGenerator(int individuals, int timeSteps, double infectionRate, double recoveryRate) throws IOException {
+    public Grid(int individuals, int timeSteps, double infectionRate, double recoveryRate) throws IOException {
         // Variable assignments
         this.individuals = individuals;
         this.timeSteps = timeSteps;

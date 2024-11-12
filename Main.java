@@ -44,7 +44,7 @@ public class Main {
         }
 
         // Generate and draw grid
-        GridGenerator grid = new GridGenerator(individuals, timeSteps, infectionRate, recoveryRate);
+        Grid grid = new Grid(individuals, timeSteps, infectionRate, recoveryRate);
         
         Person[][] previousGrid;
         for (int time = 0; time < timeSteps; time++) {
