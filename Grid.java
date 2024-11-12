@@ -78,7 +78,8 @@ public class Grid {
         outputFile.println("Susceptible Individuals: " + susceptibleCount);
         outputFile.println("Infected Individuals: " + infectedCount);
         outputFile.println("Recovered Individuals: " + recoveredCount);
-        outputFile.printf("Infected Ratio: " + infectedCount + "/" + individuals + " (" + infectedRatio + ")");
+        outputFile.printf("Infected Ratio: " + infectedCount + "/" + 
+                            individuals + " (" + infectedRatio + ")");
         outputFile.println("\nThis is the end of the file.");
         outputFile.close();
     }
