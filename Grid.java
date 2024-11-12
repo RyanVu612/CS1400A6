@@ -21,7 +21,8 @@ public class Grid {
 
         // Creates the grid
         declareGrid();
-        printGrid(0);
+        // Time 0 since this is the starting grid
+        printGrid(0); 
     }
 
     public void declareGrid() {
