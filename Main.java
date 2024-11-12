@@ -62,7 +62,6 @@ public class Main {
                     if (person.getStatus().equals("S") && isNextToInfectedPerson(previousGrid, i, j)) {
                         person.infect(); 
                     } else if (person.getStatus().equals("I")) {    // If person is I, call recover()
-
                         person.recover();
                     }
                 }
